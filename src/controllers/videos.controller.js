@@ -76,6 +76,13 @@ export async function uploadVideo(req, res) {
     fileName = String(Date.now()),
     newPathFile = path.join('uploads', fileName);
 
+  if (fs.existsSync(path.join(__dirname, 'uploads'))) {
+    console.log('Directory exists!');
+  } else {
+    console.log('Directory not found.');
+    fs.mkdirSync(path.join(__dirname, 'uploads'));
+  }
+
   await tmpFile.mv(newPathFile);
 
   const info = await getVideoInfo(newPathFile);
